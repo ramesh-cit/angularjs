@@ -1,28 +1,85 @@
 <!doctype html >
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">
 <html ng-app="root">
-  <head>
+
+<head>
     <title>My Angular App</title>
     <!-- Latest compiled and minified CSS - Twitter Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
-     <script src="../app/root.js"></script>
-  </head>
-  <body ng-controller="index" >
-  	<div>
-  		<label style="color:green;font-size:40px">Enter Your Name:</label>
-  		<input type="text" class="defaultTextBox" ng-model="name" placeholder="Enter Your Name Here ..">
-  		<hr>
-  		<h1>Hello {{name}}</h1>	
-      <h2>{{message}}</h2>
-      <h3> Expressions in Angular JS </h3>
-      <span style="color:green;font-size:40px" >Add 2 Numbers (1 + 1) = {{1+1}}</span>
-  	</div>
-    <div ng-controller="StoreController as store" style="color:purple">
-    <h1>Product Name: {{store.product.name}}  </h1>
-    <h2>Price : ${{store.product.price}}</h2>
-    <h2>Description : ${{store.product.description}}</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+    <script src="../app/root.js"></script>
+</head>
+
+<body ng-controller="index">
+    <div>
+        <label style="color:green;font-size:40px">Enter Your Name:</label>
+        <input type="text" class="defaultTextBox" ng-model="name" placeholder="Enter Your Name Here ..">
+        <hr>
+        <h1>Hello {{name}}</h1>
+        <h2>{{message}}</h2>
+        <h3> Expressions in Angular JS </h3>
+        <span style="color:green;font-size:40px">Add 2 Numbers (1 + 1) = {{1+1}}</span>
     </div>
-  </body>
+    <div class="list-group" ng-controller="StoreController as store">
+        <div class="list-group-item" ng-repeat="product in store.products">
+      <h3>
+        {{product.name}}
+        <em class="pull-right">{{product.price | currency}}</em>
+      </h3>
+            <section ng-show="product.images.length">
+                <img ng-src="{{product.images[0]}}" height="400" width="400" />
+                <ul class="list-inline thumbs">
+                    <li class="thumbnail" ng-repeat="image in product.images">
+                        <img ng-src="{{image}} "  height="70" width="70" />
+                    </li>
+                </ul>
+            </section>
+            <section class="tab" ng-controller="TabController as tab">
+                <ul class="nav nav-pills">
+                    <li ng-class="{ active:tab.isSet(1) }">
+                        <a href ng-click="tab.setTab(1)">Description</a>
+                    </li>
+                    <li ng-class="{ active:tab.isSet(2) }">
+                        <a href ng-click="tab.setTab(2)">Specification</a>
+                    </li>
+                    <li ng-class="{ active:tab.isSet(3) }">
+                        <a href ng-click="tab.setTab(3)">Reviews</a>
+                    </li>
+                </ul>
+                <div ng-show="tab.isSet(1)">
+                    <h4>Description</h4>
+                    <blockquote>{{product.description}}</blockquote>>
+                </div>
+                <div ng-show="tab.isSet(2)">
+                    <h4>Specification</h4>
+                    <blockquote>Shine: + {{product.shine}}</blockquote>
+                </div>
+                <div ng-show="tab.isSet(3)">
+                    <h4>Reviews</h4>
+                    <blockquote>{{product.reviews[0].body}}</blockquote>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div ng-controller="StoreController as store" style="color:purple">
+        <div ng-repeat="product in store.products | limitTo:3 | orderBy:'-price'">
+            <h1>Product Name: {{product.name | uppercase}}  </h1>
+            <em>Price : {{product.price | currency}}</em>
+            </br>
+            <strong>Description : {{product.description}}</strong>
+            </br>
+            <img ng-src="{{product.images[0]}}" height="100" width="100">
+            <!--
+            <ul class="img-thumbnails clearfix" ng-repeat="image in product.images"
+              <li class="small-image pull-left thumbnail">
+                 <img ng-src="{{image}}" />
+              </li>
+            </ul>
+            -->
+            <button ng-show="product.canPurchase">Add to Cart</button>
+        </div>
+    </div>
+</body>
+
 </html>

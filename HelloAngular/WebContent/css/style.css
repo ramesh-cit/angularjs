@@ -1,0 +1,16 @@
+.defaultTextBox {
+    padding: 0;
+    height: 30px;
+    position: relative;
+    left: 0;
+    outline: none;
+    border: 2px solid #cdcdcd;
+    border-color: rgba(10,30,230,.15);
+    background-color: white;
+    font-size: 26px;
+    color: blue;
+}
+.advancedSearchTextbox {
+    width: 526px;
+    margin-right: -4px;
+}

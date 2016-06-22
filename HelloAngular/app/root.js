@@ -20,6 +20,12 @@ app.controller('StoreController', function() {
 	  };
   });
 
+  app.controller('GalleryController', function(){
+    this.current = 0;
+    this.setCurrent = function(newGallery){
+      this.current = newGallery || 0;
+    };
+   });
 var gems = [ {
 	name: "Diamond",
 	price :9278.67,

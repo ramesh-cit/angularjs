@@ -1,6 +1,6 @@
 (function() {
 
-var app = angular.module('root', []);
+var app = angular.module('HelloAngular', []);
 app.controller("index", ["$scope", function ($scope) {
         $scope.message = "Welcome to Angular JS!";
     }]);
